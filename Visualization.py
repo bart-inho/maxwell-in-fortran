@@ -20,5 +20,5 @@ def LivePlot(array):
     print('Live plot successfully finished !!')
 
 hello = np.loadtxt('Ex.txt')
-hello = hello[:, 2000:4000] # Crop into the region of interest
+# hello = hello[:, 2000:4000] # Crop into the region of interest
 LivePlot(hello) # Live plot
