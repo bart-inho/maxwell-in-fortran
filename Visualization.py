@@ -33,10 +33,9 @@ def LivePlot(control, constructive, destructive):
     # Vertical line specifications
     vline_specs = [(None, None), (485, 'green'), (475, 'black')]
 
-    for ax, field, color, label, (vline_x, vline_color) in zip(axs, fields, colors, labels, vline_specs):
+    for i, (ax, field, color, label, (vline_x, vline_color)) in enumerate(zip(axs, fields, colors, labels, vline_specs)):
         ax.set_ylim((-1, 1))
         ax.set_xlim((0, len(field[0, :])))
-        # ax.grid(True)
         line, = ax.plot(field[0, :], color=color, label=label)
         lines.append(line)
         dot, = ax.plot(500, field[0, 500], 'ro')  # Add a red dot on each plot
@@ -45,7 +44,12 @@ def LivePlot(control, constructive, destructive):
         ax.legend(loc="upper right")
         if vline_x:  # Add vertical line if specified
             ax.axvline(x=vline_x, color=vline_color, linestyle='--')
+        if i == 2:  # Only for the last subplot
+            ax.set_xlabel("n-points")
+
     plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.4, hspace=0.5)
+    # General y-label for the whole plot
+    fig.text(0.04, 0.5, 'Field Strength []', va='center', rotation='vertical')
 
     # Creating the animation
     anim = FuncAnimation(fig, update, frames=np.arange(0, len(control)),
